@@ -1,5 +1,8 @@
-![alt text](bridge.png)
+<img src="/docs/images/bridge.png">
+<div align="center">
+  
 # Hyper Net Manager (HNM)
+  
 ```
 ██╗  ██╗ ███╗   ██╗ ███╗   ███╗
 ██║  ██║ ████╗  ██║ ████╗ ████║
@@ -8,6 +11,8 @@
 ██║  ██║ ██║ ╚████║ ██║ ╚═╝ ██║
 ╚═╝  ╚═╝ ╚═╝  ╚═══╝ ╚═╝     ╚═╝
 ```
+</div>
+
 ## Hyper Net Manager (HNM) is a fully automated KVM/libvirt network & virtualization orchestration framework, engineered for:
 
 - Cybersecurity labs
@@ -18,7 +23,11 @@
 - Training environments
 
 ### Designed for professionals who need fast, repeatable, and reliable virtual network labs.
+
+<div align="center">
+
 ## 🔥 Features
+
 | Category                 | Features                                                            |
 | ------------------------ | ------------------------------------------------------------------- |
 | **Host Network Manager** | Bridge switching, Ethernet mode, auto-detect NICs                   |
@@ -27,6 +36,8 @@
 | **LAB Scenarios**        | AD LAB, pivoting, sandbox isolation, sniffing, misconfig injections |
 | **Diagnostics**          | Network/state reports, DNS/NM/libvirt validation                    |
 | **UX**                   | Tilix launcher, polished banners, FZF menus, fast navigation        |
+
+</div>
 
 ## 🎬 Demo
 ### 🟩 Banner + Boot Animation
@@ -39,8 +50,6 @@
 ### 🟪 VLAN / Libvirt Networking
 
 ### 🟥 Pentest / AD LAB Automation
-
-## 📦 Installation (.deb)
 
 Download the latest .deb from Releases and install:
 ```bash
@@ -96,12 +105,12 @@ hyper-net-manager/
 - libvirt-clients
 - bridge-utils
 - iproute2
-#### - iptables
+- iptables
 
 ### Recommended:
-#### - Tilix (best experience)
-#### - virt-manager / virt-viewer
-#### - systemd-resolved enabled
+- Tilix (best experience)
+- virt-manager / virt-viewer
+- systemd-resolved enabled
 
 ## 🧩 Building Your Own .deb
 ### Inside /packaging:
@@ -129,3 +138,6 @@ sudo dpkg -i hyper-net-manager_1.0.3.deb
 - **Alex Marano**
 - Cyber Warfare Specialist
 - ✉️ alex_marano87@hotmail.com
+
+> [!IMPORTANT]
+> The script may have execution errors, translation issues, and opportunities for visual improvements. Contribute!
