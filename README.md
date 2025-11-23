@@ -48,11 +48,11 @@ sudo dpkg -i hyper-net-manager_1.0.3.deb
 sudo apt --fix-broken install -y   # if needed
 ```
 ### This installs:
-##### - /usr/local/bin/hnm → main engine
-##### - /usr/local/bin/hnm-launcher → PKEXEC GUI launcher
-##### - Polkit policy (/usr/share/polkit-1/actions/com.hnm.launch.policy)
-##### - Desktop entry (/usr/share/applications/hnm.desktop)
-##### - Icons (/usr/share/icons/hicolor/.../hnm.png)
+- /usr/local/bin/hnm → main engine
+- /usr/local/bin/hnm-launcher → PKEXEC GUI launcher
+- Polkit policy (/usr/share/polkit-1/actions/com.hnm.launch.policy)
+- Desktop entry (/usr/share/applications/hnm.desktop)
+- Icons (/usr/share/icons/hicolor/.../hnm.png)
 
 ## 🚀 Launching
 ### From GUI:
@@ -91,11 +91,11 @@ hyper-net-manager/
 
 ## 🛠 Requirements
 ### Mandatory:
-#### - Bash ≥ 5
-#### - libvirt-daemon-system
-#### - libvirt-clients
-#### - bridge-utils
-#### - iproute2
+- Bash ≥ 5
+- libvirt-daemon-system
+- libvirt-clients
+- bridge-utils
+- iproute2
 #### - iptables
 
 ### Recommended:
