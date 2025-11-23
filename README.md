@@ -31,6 +31,7 @@
 
 ## 🎬 Demo
 ### 🟩 Banner + Boot Animation
+<img src="/docs/gifs/banner.gif">
 
 ### 🟧 Main Menu Navigation
 
