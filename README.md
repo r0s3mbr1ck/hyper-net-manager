@@ -113,18 +113,18 @@ make deb
 sudo dpkg -i hyper-net-manager_1.0.3.deb
 ```
 ## 🧪 Tested On
-### Debian 12
-### Ubuntu 24.04
-### Kali Linux 2024/2025
-### KDE Plasma, GNOME, XFCE
+- Debian 12
+- Ubuntu 24.04
+- Kali Linux 2024/2025
+- KDE Plasma, GNOME, XFCE
 
 ## 🛡️ Security Notes
-### Runs under pkexec for safer privilege elevation
-### Internal networks are isolated by default
-### No persistent VM modifications unless explicitly triggered
-### XML backups of VMs are auto-stored in /root/vm-xml-backups/
+- Runs under pkexec for safer privilege elevation
+- Internal networks are isolated by default
+- No persistent VM modifications unless explicitly triggered
+- XML backups of VMs are auto-stored in /root/vm-xml-backups/
 
 ## 👨‍💻 Lead Developer
-### Alex Marano
-### Cyber Warfare Specialist
-### ✉️ alex_marano87@hotmail.com
+- **Alex Marano**
+- Cyber Warfare Specialist
+- ✉️ alex_marano87@hotmail.com
