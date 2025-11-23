@@ -39,8 +39,6 @@
 
 ### 🟥 Pentest / AD LAB Automation
 
-
-
 ## 📦 Installation (.deb)
 
 Download the latest .deb from Releases and install:
@@ -88,6 +86,8 @@ hyper-net-manager/
 └── README.md
 
 ```
+---
+
 ## 🛠 Requirements
 ### Mandatory:
 #### - Bash ≥ 5
