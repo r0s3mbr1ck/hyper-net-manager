@@ -1,4 +1,4 @@
-<img src="/docs/images/bridge.png">
+
 
 <div align="center">
   
