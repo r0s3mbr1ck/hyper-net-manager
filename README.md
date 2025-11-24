@@ -15,8 +15,6 @@
 - VM lifecycle automation
 - Training environments
 
-<img src="/docs/images/banner.png">
-
 ### Designed for professionals who need fast, repeatable, and reliable virtual network labs.
 
 <div align="center">
