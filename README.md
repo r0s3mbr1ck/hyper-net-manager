@@ -1,4 +1,7 @@
 <img src="/docs/images/bridge.png">
+
+<img src="/docs/images/banner.png">
+
 <div align="center">
   
 # Hyper Net Manager (HNM)
