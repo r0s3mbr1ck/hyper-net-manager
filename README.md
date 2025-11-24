@@ -5,7 +5,8 @@
 # Hyper Net Manager (HNM)
 </div>
 
-<img src="/docs/images/Kali-dragon-icon.svg">
+<img width="1113" height="305" alt="banner" src="https://github.com/user-attachments/assets/0f2fb8ec-e758-49d8-8ca6-0a51dcabe905" />
+
 
 ## Hyper Net Manager (HNM) is a fully automated KVM/libvirt network & virtualization orchestration framework, engineered for:
 
