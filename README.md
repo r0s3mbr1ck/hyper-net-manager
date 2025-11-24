@@ -5,9 +5,7 @@
 </div>
 
 <div align="center">
-
-<img src="/docs/images/banner.png">
-
+  <img src="/docs/images/banner.png" alt="HNM">
 </div>
 
 ## Hyper Net Manager (HNM) is a fully automated KVM/libvirt network & virtualization orchestration framework, engineered for:
