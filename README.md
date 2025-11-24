@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="/docs/images/banner.jpg" alt="Logo da Minha Empresa">
+<img src="/docs/images/banner.jpg">
   
 # Hyper Net Manager (HNM)
 </div>
