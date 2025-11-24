@@ -40,9 +40,7 @@
 </div>
 
 ### 📽️ Banner + Boot Animation
-
-<img src="/docs/gifs/banner.gif">
-
+![Peek 2025-11-23 17-18](https://github.com/user-attachments/assets/75573b8f-c360-4cc8-abed-81a158bf16ea)
 ### 📽️ VM Lifecycle (create → connect → console)
 
 ### 📽️ VLAN / Libvirt Networking
