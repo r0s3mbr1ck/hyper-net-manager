@@ -2,6 +2,9 @@
 <div align="center">
   
 # Hyper Net Manager (HNM)
+</div>
+
+<div align="center">
   
 ```
 ██╗  ██╗ ███╗   ██╗ ███╗   ███╗
@@ -9,8 +12,9 @@
 ███████║ ██╔██╗ ██║ ██╔████╔██║
 ██╔══██║ ██║╚██╗██║ ██║╚██╔╝██║
 ██║  ██║ ██║ ╚████║ ██║ ╚═╝ ██║
-╚═╝  ╚═╝ ╚═╝  ╚═══╝ ╚═╝     ╚═╝
+╚═╝  ╚═╝ ╚═╝ ╚══╝ ╚═╝     ╚═╝
 ```
+
 </div>
 
 ## Hyper Net Manager (HNM) is a fully automated KVM/libvirt network & virtualization orchestration framework, engineered for:
@@ -38,18 +42,26 @@
 | **UX**                   | Tilix launcher, polished banners, FZF menus, fast navigation        |
 
 </div>
+<div align="center">
 
 ## 🎬 Demo
-### 🟩 Banner + Boot Animation
+
+</div>
+
+### 📽️ Banner + Boot Animation
 <img src="/docs/gifs/banner.gif">
 
-### 🟧 Main Menu Navigation
+### 📽️ VM Lifecycle (create → connect → console)
 
-### 🟦 VM Lifecycle (create → connect → console)
+### 📽️ VLAN / Libvirt Networking
 
-### 🟪 VLAN / Libvirt Networking
+### 📽️ Pentest / AD LAB Automation
 
-### 🟥 Pentest / AD LAB Automation
+<div align="center">
+  
+## ⬇️ Instalation
+
+</div>
 
 Download the latest .deb from Releases and install:
 ```bash
@@ -63,7 +75,12 @@ sudo apt --fix-broken install -y   # if needed
 - Desktop entry (/usr/share/applications/hnm.desktop)
 - Icons (/usr/share/icons/hicolor/.../hnm.png)
 
+<div align="center">
+  
 ## 🚀 Launching
+
+</div>
+
 ### From GUI:
 #### Applications Menu → Hyper Net Manager
 
@@ -71,7 +88,11 @@ sudo apt --fix-broken install -y   # if needed
 ```bash
 hnm
 ```
+<div align="center">
+  
 ## 📂 Project Structure
+</div>
+
 ```graphql
 hyper-net-manager/
 │
@@ -98,7 +119,12 @@ hyper-net-manager/
 ```
 ---
 
+<div align="center">
+  
 ## 🛠 Requirements
+
+</div>
+
 ### Mandatory:
 - Bash ≥ 5
 - libvirt-daemon-system
@@ -122,19 +148,35 @@ make deb
 ```bash
 sudo dpkg -i hyper-net-manager_1.0.3.deb
 ```
+
+<div align="center">
+  
 ## 🧪 Tested On
+</div>
+
 - Debian 12
 - Ubuntu 24.04
 - Kali Linux 2024/2025
 - KDE Plasma, GNOME, XFCE
 
+
+<div align="center">
+
 ## 🛡️ Security Notes
+</div>
+
 - Runs under pkexec for safer privilege elevation
 - Internal networks are isolated by default
 - No persistent VM modifications unless explicitly triggered
 - XML backups of VMs are auto-stored in /root/vm-xml-backups/
 
+
+<div align="center">
+
 ## 👨‍💻 Lead Developer
+
+</div>
+
 - **Alex Marano**
 - Cyber Warfare Specialist
 - ✉️ alex_marano87@hotmail.com
