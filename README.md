@@ -1,11 +1,11 @@
 <img src="/docs/images/bridge.png">
 
 <div align="center">
-
-[<img src="/docs/images/banner.jpg">](https://github.com/r0s3mbr1ck/hyper-net-manager/blob/6d401690e8f0a4734d5526833e0525b850fe7353/docs/images/banner.png)
   
 # Hyper Net Manager (HNM)
 </div>
+
+<img src="/docs/images/bridge.png">
 
 ## Hyper Net Manager (HNM) is a fully automated KVM/libvirt network & virtualization orchestration framework, engineered for:
 
