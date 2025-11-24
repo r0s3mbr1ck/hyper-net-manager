@@ -40,6 +40,7 @@
 </div>
 
 ### 📽️ Banner + Boot Animation
+
 <img src="/docs/gifs/banner.gif">
 
 ### 📽️ VM Lifecycle (create → connect → console)
