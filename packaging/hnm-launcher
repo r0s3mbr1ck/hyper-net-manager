@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Descobre o binário do HNM: se 'hnm' estiver no PATH, usa ele,
+# senão cai para /usr/local/bin/hnm
+
+SCRIPT="$(command -v hnm 2>/dev/null || echo /usr/local/bin/hnm)"
+
+# Se não existir ou não for executável, mostra erro em GUI (ou no terminal)
+if [[ ! -x "$SCRIPT" ]]; then
+    if command -v kdialog >/dev/null 2>&1; then
+        kdialog --error "Hyper Net Manager not found at $SCRIPT"
+    elif command -v zenity >/dev/null 2>&1; then
+        zenity --error --text="Hyper Net Manager not found at $SCRIPT"
+    else
+        echo "ERROR: Hyper Net Manager not found at $SCRIPT" >&2
+    fi
+    exit 1
+fi
+
+# Escolhe automaticamente um terminal gráfico
+TERM_CMD=()
+
+if command -v konsole >/dev/null 2>&1; then
+    TERM_CMD=(konsole --noclose -e)
+elif command -v tilix >/dev/null 2>&1; then
+    TERM_CMD=(tilix --geometry=138x44 -e)
+elif command -v gnome-terminal >/dev/null 2>&1; then
+    TERM_CMD=(gnome-terminal --)
+elif command -v xfce4-terminal >/dev/null 2>&1; then
+    TERM_CMD=(xfce4-terminal -e)
+elif command -v xterm >/dev/null 2>&1; then
+    TERM_CMD=(xterm -e)
+fi
+
+# Se não achar nenhum terminal gráfico, roda direto (pkexec ou sudo)
+if [[ ${#TERM_CMD[@]} -eq 0 ]]; then
+    if command -v pkexec >/dev/null 2>&1; then
+        exec pkexec "$SCRIPT"
+    else
+        exec sudo "$SCRIPT"
+    fi
+fi
+
+# Agora abre o terminal como root via pkexec (caixa gráfica de senha)
+if command -v pkexec >/dev/null 2>&1; then
+    exec pkexec env DISPLAY="$DISPLAY" XAUTHORITY="$XAUTHORITY" "${TERM_CMD[@]}" "$SCRIPT"
+else
+    # Fallback: abre terminal normal e pede senha no próprio terminal
+    exec "${TERM_CMD[@]}" sudo "$SCRIPT"
+fi
+
