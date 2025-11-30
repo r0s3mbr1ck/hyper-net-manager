@@ -36,6 +36,9 @@
 </div>
 <div align="center">
 
+> [!IMPORTANT]
+> The script may have execution errors, translation issues, and opportunities for visual improvements. Contribute!
+
 ## 🎬 Demo
 
 </div>
@@ -183,6 +186,3 @@ sudo dpkg -i hyper-net-manager_1.0.3.deb
 - **Alex Marano**
 - Cyber Warfare Specialist
 - ✉️ alex_marano87@hotmail.com
-
-> [!IMPORTANT]
-> The script may have execution errors, translation issues, and opportunities for visual improvements. Contribute!
