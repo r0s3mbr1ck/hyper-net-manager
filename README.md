@@ -10,15 +10,15 @@
 
 ## Hyper Net Manager (HNM) is a fully automated KVM/libvirt network & virtualization orchestration framework, engineered for:
 
-- Cybersecurity labs
-- Corporate AD labs
+-Cybersecurity labs
+- Corporate Active Directory environments
 - Pentest / offensive security simulations
-- VLAN/DMZ network engineering
+- VLAN / DMZ network engineering
 - VM lifecycle automation
-- Manage Connections (Bridge / Wifi / VPN)
-- Training environments
+- Connection management (Bridge / Wi-Fi / VPN)
+- Training and educational environments
 
-### Designed for professionals who need fast, repeatable, and reliable virtual network labs.
+### Designed for Linux users running KVM/libvirt who need fast, repeatable, and reliable virtual network labs.
 
 <div align="center">
 
@@ -41,14 +41,19 @@
 </div>
 
 ### 📽️ Banner + Boot Animation
+![Banner + Boot Animation](https://github.com/user-attachments/assets/088dc3c1-0a87-49c4-915b-761a7e6f41f1)
 
 ### 📽️ Manage Bridge + Wifi + VPN
+![Manage Bridge + Wifi + VPN](https://github.com/user-attachments/assets/ac3dbf3e-5bb3-46d1-a92f-c453ccc03987)
 
 ### 📽️ VM Manage (create → connect → console)
+![VM Manage](https://github.com/user-attachments/assets/a528a474-4560-47b1-9abf-311f0359f1ea)
 
 ### 📽️ VLAN / Libvirt Networking
+![VLAN - libvirt](https://github.com/user-attachments/assets/eba97233-da62-43fe-b0cd-556a620a8750)
 
 ### 📽️ Pentest / AD LAB Automation
+![Pentest AD](https://github.com/user-attachments/assets/c257b6e4-31fa-42e2-9505-bc465de1b65c)
 
 <div align="center">
   
