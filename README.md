@@ -115,7 +115,7 @@ hyper-net-manager/
 │
 ├── docs/
 │   ├── gifs/           # demo GIFs for README
-│   └── screenshots/
+│   └── images/
 │
 └── README.md
 
