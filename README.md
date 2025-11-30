@@ -15,6 +15,7 @@
 - Pentest / offensive security simulations
 - VLAN/DMZ network engineering
 - VM lifecycle automation
+- Manage Connections (Bridge / Wifi / VPN)
 - Training environments
 
 ### Designed for professionals who need fast, repeatable, and reliable virtual network labs.
