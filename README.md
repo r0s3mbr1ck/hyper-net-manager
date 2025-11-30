@@ -137,6 +137,11 @@ hyper-net-manager/
 make clean
 make deb
 ```
+### Can be sign your package
+```bash
+make clean
+make sign
+```
 ### **Install your newly built package:**
 ```bash
 sudo dpkg -i hyper-net-manager_1.0.3.deb
