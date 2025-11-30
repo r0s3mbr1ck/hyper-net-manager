@@ -34,13 +34,11 @@
 | **UX**                   | Tilix launcher, polished banners, FZF menus, fast navigation        |
 
 </div>
-<div align="center">
-
-
 
 > [!IMPORTANT]
 > The script may have execution errors, translation issues, and opportunities for visual improvements. Contribute!
 
+<div align="center">
 
 
 ## 🎬 Demo
