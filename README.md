@@ -26,7 +26,7 @@
 
 | Category                 | Features                                                            |
 | ------------------------ | ------------------------------------------------------------------- |
-| **Host Network Manager** | Bridge switching, Ethernet mode, auto-detect NICs                   |
+| **Host Network Manager** | Bridge switching, Manage Ethernet Wifi/VPN Connections              |
 | **VM Manager**           | Create, clone, snapshot, resize CPU/RAM, detect IPs                 |
 | **VM Networks**          | Internal VLANs, NAT, host-only, real VLANs, DMZ                     |
 | **LAB Scenarios**        | AD LAB, pivoting, sandbox isolation, sniffing, misconfig injections |
