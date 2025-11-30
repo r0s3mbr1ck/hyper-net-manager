@@ -137,7 +137,7 @@ hyper-net-manager/
 make clean
 make deb
 ```
-### Can be sign your package
+### Create and sign to your package
 ```bash
 make clean
 make sign
