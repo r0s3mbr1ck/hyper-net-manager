@@ -52,7 +52,7 @@
 ![Manage Bridge + Wifi + VPN](https://github.com/user-attachments/assets/ac3dbf3e-5bb3-46d1-a92f-c453ccc03987)
 
 ### 📽️ VM Manage (create → connect → console)
-![VM manage](https://github.com/user-attachments/assets/a617e54e-7fb8-4ef1-ac49-80755dfaa8eb)
+![VM manage](https://github.com/user-attachments/assets/34f5b80c-427e-4089-9b0b-4661362470d8)
 
 ### 📽️ VLAN / Libvirt Networking
 ![VLAN - libvirt](https://github.com/user-attachments/assets/eba97233-da62-43fe-b0cd-556a620a8750)
