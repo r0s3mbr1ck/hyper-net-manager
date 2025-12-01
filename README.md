@@ -10,7 +10,7 @@
 
 ## Hyper Net Manager (HNM) is a fully automated KVM/libvirt network & virtualization orchestration framework, engineered for:
 
--Cybersecurity labs
+- Cybersecurity labs
 - Corporate Active Directory environments
 - Pentest / offensive security simulations
 - VLAN / DMZ network engineering
