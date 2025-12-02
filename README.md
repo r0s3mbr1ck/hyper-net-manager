@@ -161,10 +161,12 @@ sudo dpkg -i hyper-net-manager_1.0.3.deb
 
 ## 🔼 Next Improvements
 </div>
+
 - Import VMs from existing systems (pre-installed OS)
 - VA/VMDK → QCOW2 automated conversion
 - USB / PCI / GPU passthrough manager
 - Simulate firewall rules
+
 <div align="center">
 
 ## 🧪 Tested On
