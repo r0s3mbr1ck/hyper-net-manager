@@ -33,7 +33,7 @@ select_vm_network_for_vm() {
     NET_NAME="default"
 
     echo
-    echo -e "${CYAN} Select the network to connect the new VM:${RESET}"
+    echo -e "${CYAN}Select the network to connect the new VM:${RESET}"
 
     # Libvirt networks
     mapfile -t LV_NETS < <(virsh net-list --all 2>/dev/null | awk 'NR>2 && NF {print $1}')
@@ -143,9 +143,9 @@ list_internal_networks() {
 #-----------------------------------------------------------
 
 create_internal_network() {
-    echo -ne "${CYAN} Internal network name (e.g., vlan_vm12): ${RESET}"
+    echo -ne "${CYAN}Internal network name (e.g., vlan_vm12): ${RESET}"
     read -r NET_NAME
-    echo -ne "${CYAN} Network prefix (e.g., 192.168.50 for 192.168.50.0/24): ${RESET}"
+    echo -ne "${CYAN}Network prefix (e.g., 192.168.50 for 192.168.50.0/24): ${RESET}"
     read -r BASE
 
     local XML="/tmp/${NET_NAME}.xml"
@@ -213,7 +213,7 @@ duplicate_internal_network() {
     echo ""
 
     # New network name
-    echo -ne "${CYAN} New network name (clone): ${RESET}"
+    echo -ne "${CYAN}New network name (clone): ${RESET}"
     read -r DST
     DST=$(echo "$DST" | xargs)
 
@@ -223,7 +223,7 @@ duplicate_internal_network() {
     fi
 
     # New prefix
-    echo -ne "${CYAN} New network prefix (e.g., 192.168.60): ${RESET}"
+    echo -ne "${CYAN}New network prefix (e.g., 192.168.60): ${RESET}"
     read -r BASE
     BASE=$(echo "$BASE" | xargs)
 
@@ -321,7 +321,7 @@ remove_internal_network() {
         echo -e "${WARN} The following VMs are connected to network '${NET_NAME}':${RESET}"
         printf '  - %s\n' "${USED_VMS[@]}"
         echo
-        echo -e "${CYAN} Action for these VMs before removing the network:${RESET}"
+        echo -e "${CYAN}Action for these VMs before removing the network:${RESET}"
         echo -e "  1) Do nothing"
         echo -e "  2) Send shutdown (virsh shutdown)"
         echo -e "  3) Send reboot (virsh reboot/start)"
@@ -412,9 +412,9 @@ remove_internal_network() {
 #-----------------------------------------------------------
 
 create_hostonly_network() {
-    echo -ne "${CYAN} Host-only network name (no NAT, just host <-> VMs): ${RESET}"
+    echo -ne "${CYAN}Host-only network name (no NAT, just host <-> VMs): ${RESET}"
     read -r NET_NAME
-    echo -ne "${CYAN} Prefix (e.g., 192.168.70): ${RESET}"
+    echo -ne "${CYAN}Prefix (e.g., 192.168.70): ${RESET}"
     read -r BASE
 
     local XML="/tmp/hostonly-${NET_NAME}.xml"
@@ -459,11 +459,11 @@ EOF
 create_dmz_network() {
     initial_bridge_setup_if_needed
 
-    echo -e "${CYAN} Create DMZ network routed between VLAN and bridge ${BRIDGE_IF}.${RESET}"
+    echo -e "${CYAN}Create DMZ network routed between VLAN and bridge ${BRIDGE_IF}.${RESET}"
     echo
-    echo -ne "${CYAN} DMZ network name (e.g., dmz_lab): ${RESET}"
+    echo -ne "${CYAN}DMZ network name (e.g., dmz_lab): ${RESET}"
     read -r NET_NAME
-    echo -ne "${CYAN} DMZ network prefix (e.g., 192.168.80): ${RESET}"
+    echo -ne "${CYAN}DMZ network prefix (e.g., 192.168.80): ${RESET}"
     read -r BASE
 
     local NET="${BASE}.0/24"
@@ -557,7 +557,7 @@ attach_vms_to_network() {
         echo -e "${YELLOW} Available VMs:${RESET}"
         virsh list --all 2>/dev/null | sed '1,2d'
         echo ""
-        echo -e "${CYAN} List of VMs (space-separated names, Enter to cancel):${RESET}"
+        echo -e "${CYAN}List of VMs (space-separated names, Enter to cancel):${RESET}"
         read -r -r VM_LIST
         VM_LIST=$(echo "$VM_LIST" | xargs)
     fi
@@ -639,7 +639,7 @@ attach_vms_to_network() {
 
     if ((${#ATTACHED_VMS[@]} > 0)); then
         echo
-        echo -e "${CYAN} VM(s) successfully connected to network '${NET_NAME}':${RESET}"
+        echo -e "${CYAN}VM(s) successfully connected to network '${NET_NAME}':${RESET}"
         printf '  - %s\n' "${ATTACHED_VMS[@]}"
         echo ""
     fi
@@ -662,11 +662,11 @@ attach_vms_to_network() {
 
 attach_vms_to_br0() {
     echo
-    echo -ne "${CYAN} Target bridge interface name (default: ${BRIDGE_IF}): ${RESET}"
+    echo -ne "${CYAN}Target bridge interface name (default: ${BRIDGE_IF}): ${RESET}"
     read -r BR_IF
     [[ -z "$BR_IF" ]] && BR_IF="$BRIDGE_IF"
 
-    echo -e "${CYAN} Select the VMs you want to connect to bridge ${BR_IF}:${RESET}"
+    echo -e "${CYAN}Select the VMs you want to connect to bridge ${BR_IF}:${RESET}"
     VM_LIST=$(select_vms_fzf)
 
     if [[ -z "$VM_LIST" ]]; then
@@ -715,11 +715,11 @@ attach_vms_to_br0() {
     fi
 
     echo
-    echo -e "${CYAN} Connected VM(s):${RESET}"
+    echo -e "${CYAN}Connected VM(s):${RESET}"
     printf '  - %s\n' "${ATTACHED_VMS[@]}"
     echo
 
-    echo -e "${CYAN} Post-configuration actions:${RESET}"
+    echo -e "${CYAN}Post-configuration actions:${RESET}"
     echo -e "  1) Nothing"
     echo -e "  2) Start VMs"
     echo -e "  3) Reboot VMs"
@@ -802,7 +802,7 @@ move_vms_from_br0() {
         echo -e "${YELLOW} Available VMs:${RESET}"
         virsh list --all 2>/dev/null | sed '1,2d'
         echo ""
-        echo -e "${CYAN} List of VMs to revert to NAT (network 'default') (space-separated names, Enter to cancel):${RESET}"
+        echo -e "${CYAN}List of VMs to revert to NAT (network 'default') (space-separated names, Enter to cancel):${RESET}"
         read -r VM_LIST
         VM_LIST=$(echo "$VM_LIST" | xargs)
     fi
@@ -855,7 +855,7 @@ move_vms_from_br0() {
 
     if ((${#MOVED_VMS[@]} > 0)); then
         echo ""
-        echo -e "${CYAN} VM(s) successfully moved to network 'default' (NAT):${RESET}"
+        echo -e "${CYAN}VM(s) successfully moved to network 'default' (NAT):${RESET}"
         printf '  - %s\n' "${MOVED_VMS[@]}"
         echo ""
     fi
@@ -1011,7 +1011,7 @@ remove_vms_from_br0() {
 
 attach_vms_to_network_wrapper() {
     local NET_NAME="$1"
-    echo -e "${CYAN} List of VMs (space-separated names) to use network ${NET_NAME}:${RESET}"
+    echo -e "${CYAN}List of VMs (space-separated names) to use network ${NET_NAME}:${RESET}"
     read -r VM_LIST
 
     # Reuse existing logic from your attach_vms_to_network,
@@ -1052,7 +1052,7 @@ attach_vms_to_network_wrapper() {
     fi
 
     echo
-    echo -e "${CYAN} VM(s) connected to network ${NET_NAME}:${RESET}"
+    echo -e "${CYAN}VM(s) connected to network ${NET_NAME}:${RESET}"
     printf '  - %s\n' "${ATTACHED_VMS[@]}"
     echo
 }

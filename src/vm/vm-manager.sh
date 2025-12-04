@@ -239,7 +239,6 @@ vm_power_menu() {
 vm_delete_vm() {
     echo
     draw_menu_title "DELETE VM (with or without disk/ISO removal)"
-    #echo -e "${GREEN_TITLE}==== DELETE VM (with or without disk/ISO removal) ====${RESET}"
     echo ""
 
     # Show VMs (informational)
@@ -255,9 +254,9 @@ vm_delete_vm() {
 
     if [[ "$state" == "running" ]]; then
         echo -e "${WARN} VM ${VM_NAME} is running.${RESET}"
-        echo -e "${CYAN} 1) Send soft shutdown${RESET}"
-        echo -e "${CYAN} 2) Force off (destroy)${RESET}"
-        echo -e "${CYAN} 3) Cancel deletion${RESET}"
+        echo -e "${CYAN}1) Send soft shutdown${RESET}"
+        echo -e "${CYAN}2) Force off (destroy)${RESET}"
+        echo -e "${CYAN}3) Cancel deletion${RESET}"
         flush_stdin
         read -r -p "Choice: " op_stop
 
@@ -270,7 +269,7 @@ vm_delete_vm() {
             2)
                 virsh destroy "$VM_NAME" >/dev/null 2>&1 || true
                 ;;
-            3|*) 
+            3|*)
                 echo -e "${INFO} Deletion canceled.${RESET}"
                 return
                 ;;
@@ -329,9 +328,9 @@ vm_delete_vm() {
     # Ask for each file if it should be removed
     if [[ ${#FILES[@]} -gt 0 ]]; then
         echo
-        echo -e "${CYAN} You can now choose to remove associated disk/ISO files.${RESET}"
-        echo -e "${CYAN} Answer 'y' to remove or Enter/N to keep.${RESET}"
-        local path
+        echo -e "${CYAN}You can now choose to remove associated disk/ISO files.${RESET}"
+        echo -e "${CYAN}Answer 'y' to remove or Enter/N to keep.${RESET}"
+        local path ans
         for i in "${!FILES[@]}"; do
             path="${FILES[$i]}"
             [[ -z "$path" ]] && continue
@@ -339,8 +338,8 @@ vm_delete_vm() {
 
             echo
             echo -ne "${YELLOW} Remove file ${path} (y/N)? ${RESET}"
-            read -r -p ans_file
-            if [[ "$ans_file" =~ ^[Yy]$ ]]; then
+            read -r ans
+            if [[ "$ans" =~ ^[Yy]$ ]]; then
                 if [[ -e "$path" ]]; then
                     if rm -f -- "$path"; then
                         echo -e "${OK} File ${path} removed.${RESET}"
@@ -361,6 +360,7 @@ vm_delete_vm() {
     echo
     echo -e "${OK} Deletion process for VM ${VM_NAME} completed.${RESET}"
 }
+
 
 #-----------------------------------------------
 # Function: vm_create_simple_vm
@@ -404,7 +404,7 @@ vm_create_simple_vm() {
     draw_menu_title "CREATE SIMPLE VM (virsh"
     #echo -e "${BLUE}===== CREATE SIMPLE VM (virsh) =====${RESET}"
 
-    echo -ne "${CYAN}		New VM name: ${RESET}"
+    echo -ne "${CYAN}New VM name: ${RESET}"
     read -r VM_NAME
     [[ -z "$VM_NAME" ]] && { echo -e "${FAIL}VM name cannot be empty.${RESET}"; return; }
 
@@ -421,7 +421,7 @@ vm_create_simple_vm() {
     local DISK_PATH="${DISK_DIR%/}/${DISK_FILE}"
 
     if [[ -f "$DISK_PATH" ]]; then
-        echo -ne "${WARN}Disk ${DISK_PATH} already exists.${RESET}"
+        echo -ne "${WARN} Disk ${DISK_PATH} already exists.${RESET}"
     else
         echo -ne "${CYAN}Disk size in GB (e.g.: 40): ${RESET}"
         read -r DISK_GB
@@ -469,7 +469,7 @@ vm_create_simple_vm() {
         	;;
     esac
 
-    echo -e "${CYAN} Libvirt network for primary NIC:${RESET}"
+    echo -e "${CYAN}Libvirt network for primary NIC:${RESET}"
 
 # pega só os nomes das redes
 mapfile -t NETS < <(virsh net-list --all --name | awk 'NF {print $1}')
@@ -516,7 +516,7 @@ mapfile -t NETS < <(virsh net-list --all --name | awk 'NF {print $1}')
     # 🔹 Segunda interface (opcional, só se NET_MODE=2)
     NET_NAME2=""
     if [[ "$NET_MODE" == "2" ]]; then
-        echo -e "${CYAN} Libvirt network for secondary NIC (DMZ / internal / pivot):${RESET}"
+        echo -e "${CYAN}Libvirt network for secondary NIC (DMZ / internal / pivot):${RESET}"
         echo -e "${INFO} Available networks:${RESET}"
         virsh net-list --all
         read -r NET_NAME2
@@ -543,7 +543,7 @@ mapfile -t NETS < <(virsh net-list --all --name | awk 'NF {print $1}')
     </interface>"
     fi
 
-    echo -ne "${CYAN} Path to ISO for boot/installation (e.g.: /isos/win10.iso): ${RESET}"
+    echo -ne "${CYAN}Path to ISO for boot/installation (e.g.: /isos/win10.iso): ${RESET}"
     read -r ISO_PATH
 
     echo -e "${INFO} Defining VM ${VM_NAME} via virsh...${RESET}"
@@ -900,7 +900,7 @@ vm_clone_vm() {
 
     # Select source VM (template) using arrow-key menu
     local SRC_VM
-    echo -e "${CYAN} Select source VM (template) to clone:${RESET}"
+    echo -e "${CYAN}Select source VM (template) to clone:${RESET}"
     SRC_VM=$(hnm_select_vm) || { echo -e "${WARN} Operation canceled.${RESET}"; return; }
 
     echo -e "${INFO} Source VM: ${SRC_VM}${RESET}"
@@ -914,14 +914,14 @@ vm_clone_vm() {
 
     # Disk directory
     local DEFAULT_IMG_DIR="$HNM_IMAGE_DIR"
-    echo -e "${CYAN} New disk directory (default: ${DEFAULT_IMG_DIR}):${RESET}"
+    echo -e "${CYAN}New disk directory (default: ${DEFAULT_IMG_DIR}):${RESET}"
     read -r NEW_DIR
     NEW_DIR=$(echo "$NEW_DIR" | xargs)
     [[ -z "$NEW_DIR" ]] && NEW_DIR="$DEFAULT_IMG_DIR"
     mkdir -p "$NEW_DIR" || { echo -e "${FAIL}Could not create ${NEW_DIR}.${RESET}"; return; }
 
     # Disk file name
-    echo -e "${CYAN} Clone's disk file name (e.g.: ${NEW_VM}.qcow2):${RESET}"
+    echo -e "${CYAN}Clone's disk file name (e.g.: ${NEW_VM}.qcow2):${RESET}"
     read -r NEW_DISK
     NEW_DISK=$(echo "$NEW_DISK" | xargs)
     [[ -z "$NEW_DISK" ]] && NEW_DISK="${NEW_VM}.qcow2"
@@ -1349,7 +1349,7 @@ EOF
 
         case "$op_snap" in
             1)
-                echo -e "${CYAN} Snapshot name (leave empty for auto-generated):${RESET}"
+                echo -e "${CYAN}Snapshot name (leave empty for auto-generated):${RESET}"
                 read -r SNAP_NAME
                 [[ -z "$SNAP_NAME" ]] && SNAP_NAME="snap_$(date +%Y%m%d_%H%M%S)"
 
@@ -1452,7 +1452,7 @@ vm_image_dir_menu() {
     echo ""
     echo -e "${INFO} Current directory:${RESET} ${YELLOW}${HNM_IMAGE_DIR}${RESET}"
     echo ""
-    echo -e "${CYAN} Enter new directory for ISO/QCOW images (press Enter to keep current):${RESET}"
+    echo -e "${CYAN}Enter new directory for ISO/QCOW images (press Enter to keep current):${RESET}"
     read -r -p "> " newdir
     newdir=$(echo "$newdir" | xargs)
 
@@ -1610,7 +1610,7 @@ launch_ssh_in_terminal() {
     # If VM name is not provided, let the user pick one (for nicer messages/logs)
     if [[ -z "$VM_NAME" ]]; then
         echo ""
-        echo -e "${CYAN} No VM name provided. Select a VM for SSH (optional, used only for display/logs):${RESET}"
+        echo -e "${CYAN}No VM name provided. Select a VM for SSH (optional, used only for display/logs):${RESET}"
         VM_NAME=$(hnm_select_vm) || VM_NAME="(no name)"
     fi
 
@@ -1620,8 +1620,8 @@ launch_ssh_in_terminal() {
     fi
 
     echo ""
-    echo -e "${CYAN} SSH connection for VM ${VM_NAME}${RESET}"
-    echo -e "${CYAN} Target IP: ${VM_IP}${RESET}"
+    echo -e "${CYAN}SSH connection for VM ${VM_NAME}${RESET}"
+    echo -e "${CYAN}Target IP: ${VM_IP}${RESET}"
 
     # suggest current user as default
     read -r -p "User for SSH (e.g., kali, root, administrator) [default: ${USER}]: " SSH_USER
@@ -1743,7 +1743,7 @@ offer_ssh_after_actions() {
 
 
         echo ""
-        echo -e "${CYAN} Do you want to access VM ${VM_NAME}?${RESET}"
+        echo -e "${CYAN}Do you want to access VM ${VM_NAME}?${RESET}"
 
         local MENU OPTIONS SEL OPT
         OPTIONS=$(
@@ -1882,7 +1882,7 @@ download_and_extract_images() {
     # Offer to unpack if it's tar/zip etc.
     case "$DEST_PATH" in
         *.tar|*.tar.gz|*.tgz|*.tar.xz|*.zip)
-            echo -ne "${CYAN} File appears to be an archive. Do you want to extract (y/N)? ${RESET}"
+            echo -ne "${CYAN}File appears to be an archive. Do you want to extract (y/N)? ${RESET}"
             read -r ans_ext
             if [[ "$ans_ext" =~ ^[Yy]$ ]]; then
                 echo -e "${INFO} Extracting in ${DEST_DIR}...${RESET}"
