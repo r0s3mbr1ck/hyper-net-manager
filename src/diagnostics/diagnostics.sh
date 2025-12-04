@@ -86,3 +86,4 @@ diagnostic_report() {
     echo -e "${CYAN} Press Enter to return to the MAIN MENU...${RESET}"
     read -r _dummy      # <-- pause here
 }
+
