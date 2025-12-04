@@ -315,19 +315,19 @@ lab_create_pivot() {
     draw_menu_title "LAB: PIVOTING (internal vlan + dmz + internet)"
     #echo -e "${GREEN_TITLE}==== LAB: PIVOTING (internal vlan + dmz + internet) ====${RESET}"
 
-    echo -ne "${CYAN} INTERNAL network name (default: pivot_int): ${RESET}"
+    echo -ne "${CYAN}INTERNAL network name (default: pivot_int): ${RESET}"
     read -r NET_INT
     [[ -z "$NET_INT" ]] && NET_INT="pivot_int"
 
-    echo -ne "${CYAN} INTERNAL network gateway (default: 10.30.10.1): ${RESET}"
+    echo -ne "${CYAN}INTERNAL network gateway (default: 10.30.10.1): ${RESET}"
     read -r GW_INT
     [[ -z "$GW_INT" ]] && GW_INT="10.30.10.1"
 
-    echo -ne "${CYAN} DMZ network name (default: pivot_dmz): ${RESET}"
+    echo -ne "${CYAN}DMZ network name (default: pivot_dmz): ${RESET}"
     read -r NET_DMZ
     [[ -z "$NET_DMZ" ]] && NET_DMZ="pivot_dmz"
 
-    echo -ne "${CYAN} DMZ network gateway (default: 10.30.20.1): ${RESET}"
+    echo -ne "${CYAN}DMZ network gateway (default: 10.30.20.1): ${RESET}"
     read -r GW_DMZ
     [[ -z "$GW_DMZ" ]] && GW_DMZ="10.30.20.1"
 
@@ -352,7 +352,7 @@ lab_create_pivot() {
     echo -e "  - DMZ:      ${NET_DMZ} (bridge ${BR_DMZ}, GW=${GW_DMZ}, NAT enabled)"
     echo
 
-    echo -ne "${CYAN} Do you want to connect any VM to the INTERNAL network (${NET_INT}) now (y/N)? ${RESET}"
+    echo -ne "${CYAN}Do you want to connect any VM to the INTERNAL network (${NET_INT}) now (y/N)? ${RESET}"
     read -r ans_int
     if [[ "$ans_int" =~ ^[Yy]$ ]]; then
         echo
@@ -361,7 +361,7 @@ lab_create_pivot() {
         attach_vms_to_network_wrapper "$NET_INT"
     fi
 
-    echo -ne "${CYAN} Do you want to connect any VM to the DMZ network (${NET_DMZ}) now (y/N)?  ${RESET}"
+    echo -ne "${CYAN}Do you want to connect any VM to the DMZ network (${NET_DMZ}) now (y/N)?  ${RESET}"
     read -r ans_dmz
     if [[ "$ans_dmz" =~ ^[Yy]$ ]]; then
         echo
@@ -394,11 +394,11 @@ lab_isolar_vm_sandbox() {
     draw_menu_title "LAB: Isolate VM in SANDBOX (no internet)"
     #echo -e "${GREEN_TITLE}==== LAB: Isolate VM in SANDBOX (no internet) ====${RESET}"
 
-    echo -ne "${CYAN} Libvirt network name (default: lab_sandbox): ${RESET}"
+    echo -ne "${CYAN}Libvirt network name (default: lab_sandbox): ${RESET}"
     read -r NET_NAME
     [[ -z "$NET_NAME" ]] && NET_NAME="lab_sandbox"
 
-    echo -ne "${CYAN} Network gateway/host (default: 10.99.0.1): ${RESET}"
+    echo -ne "${CYAN}Network gateway/host (default: 10.99.0.1): ${RESET}"
     read -r GW_IP
     [[ -z "$GW_IP" ]] && GW_IP="10.99.0.1"
 
@@ -415,13 +415,13 @@ lab_isolar_vm_sandbox() {
     echo -e "${INFO} Sandbox network '${NET_NAME}' is ready. VMs connected to it will NOT have internet.${RESET}"
     echo
 
-    echo -e "${CYAN} Do you want to connect an existing VM to this sandbox network now? (y/N)${RESET}"
+    echo -e "${CYAN}Do you want to connect an existing VM to this sandbox network now? (y/N)${RESET}"
     read -r ans_vm
     if [[ "$ans_vm" =~ ^[Yy]$ ]]; then
         echo -e "${INFO} Available VMs (virsh list --all):${RESET}"
         virsh list --all
         echo
-        echo -e "${CYAN} Target libvirt network for VMs:${RESET} ${NET_NAME}"
+        echo -e "${CYAN}Target libvirt network for VMs:${RESET} ${NET_NAME}"
         # Reuse generic attach function (already existing)
         # It will ask for the VM names.
         attach_vms_to_network_wrapper "$NET_NAME"
@@ -801,7 +801,7 @@ lab_network_perf() {
     fi
 
     # Select target VM
-    echo -e "${CYAN} Select the target VM for the performance test:${RESET}"
+    echo -e "${CYAN}Select the target VM for the performance test:${RESET}"
     local VM_NAME
     VM_NAME=$(hnm_select_vm) || { echo -e "${WARN}Operation canceled.${RESET}"; return 1; }
 
@@ -820,11 +820,11 @@ lab_network_perf() {
     fi
 
     # Basic iperf3 settings
-    echo -e "${CYAN} Test duration in seconds (default: 10):${RESET}"
+    echo -e "${CYAN}Test duration in seconds (default: 10):${RESET}"
     read -r IPERF_TIME
     [[ -z "$IPERF_TIME" ]] && IPERF_TIME=10
 
-    echo -e "${CYAN} Number of parallel streams (default: 1):${RESET}"
+    echo -e "${CYAN}Number of parallel streams (default: 1):${RESET}"
     read -r IPERF_PAR
     [[ -z "$IPERF_PAR" ]] && IPERF_PAR=1
 
@@ -844,7 +844,7 @@ EOF
         }
         MODE_OPT=$(echo "$MODE_SEL" | awk '{print $1}' | tr -d ')')
     else
-        echo -e "${CYAN} Select iperf3 mode:${RESET}"
+        echo -e "${CYAN}Select iperf3 mode:${RESET}"
         echo "1) Start iperf3 server on VM via SSH, then run client on host"
         echo "2) Assume iperf3 server is already running on VM (port 5201)"
         echo "0) Cancel"
@@ -854,7 +854,7 @@ EOF
 
     case "$MODE_OPT" in
         1)
-            echo -e "${CYAN} SSH user to start iperf3 server on VM (default: ${USER}):${RESET}"
+            echo -e "${CYAN}SSH user to start iperf3 server on VM (default: ${USER}):${RESET}"
             read -r SSH_USER
             [[ -z "$SSH_USER" ]] && SSH_USER="$USER"
             local SSH_TARGET="${SSH_USER}@${VM_IP}"
@@ -947,7 +947,7 @@ lab_block_internet_all() {
         IF_MENU+="${iface}  (${addr})"$'\n'
     done <<< "$IF_LIST"
 
-    echo -e "${CYAN} Select the WAN interface that provides Internet for your VMs:${RESET}"
+    echo -e "${CYAN}Select the WAN interface that provides Internet for your VMs:${RESET}"
     if ensure_fzf; then
         IF_SEL=$(hnm_select "WAN interface for Internet blocking" "$IF_MENU") || {
             echo -e "${WARN} Operation canceled.${RESET}"
@@ -982,7 +982,7 @@ EOF
         }
         ACTION_OPT=$(echo "$ACTION_SEL" | awk '{print $1}' | tr -d ')')
     else
-        echo -e "${CYAN} Select action:${RESET}"
+        echo -e "${CYAN}Select action:${RESET}"
         echo "1) Enable Internet block for all VM traffic"
         echo "2) Disable Internet block"
         echo "0) Cancel"
@@ -1071,7 +1071,7 @@ lab_allow_internet_some() {
         IF_MENU+="${iface}  (${addr})"$'\n'
     done <<< "$IF_LIST"
 
-    echo -e "${CYAN} Select the WAN interface used for Internet (same used in lab_block_internet_all):${RESET}"
+    echo -e "${CYAN}Select the WAN interface used for Internet (same used in lab_block_internet_all):${RESET}"
     if ensure_fzf; then
         IF_SEL=$(hnm_select "WAN interface for Internet exceptions" "$IF_MENU") || {
             echo -e "${WARN} Operation canceled.${RESET}"
@@ -1106,7 +1106,7 @@ EOF
         }
         ACTION_OPT=$(echo "$ACTION_SEL" | awk '{print $1}' | tr -d ')')
     else
-        echo -e "${CYAN} Select action:${RESET}"
+        echo -e "${CYAN}Select action:${RESET}"
         echo "1) Add Internet allow exceptions for selected VMs"
         echo "2) Remove existing Internet allow exceptions"
         echo "0) Cancel"
@@ -1183,7 +1183,7 @@ EOF
 
             if ((${#ALLOWED[@]} > 0)); then
                 echo ""
-                echo -e "${CYAN} Internet allowed for the following VM(s):${RESET}"
+                echo -e "${CYAN}Internet allowed for the following VM(s):${RESET}"
                 printf '  - %s\n' "${ALLOWED[@]}"
                 echo ""
             fi
@@ -1284,12 +1284,12 @@ lab_snapshot_all() {
     # Fallback: ask if wants all or manual list
     if [[ -z "$VM_LIST" ]]; then
         echo -e "${YELLOW} No VMs selected via menu.${RESET}"
-        echo -e "${CYAN} Use ALL VMs listed by libvirt? (y/N):${RESET}"
+        echo -e "${CYAN}Use ALL VMs listed by libvirt? (y/N):${RESET}"
         read -r use_all
         if [[ "$use_all" =~ ^[Yy]$ ]]; then
             VM_LIST="$ALL_VMS"
         else
-            echo -e "${CYAN} Enter VMs to snapshot (space-separated, Enter to cancel):${RESET}"
+            echo -e "${CYAN}Enter VMs to snapshot (space-separated, Enter to cancel):${RESET}"
             read -r VM_LIST
             VM_LIST=$(echo "$VM_LIST" | xargs)
         fi
@@ -1299,7 +1299,7 @@ lab_snapshot_all() {
 
     # Snapshot base name
     local BASE_NAME
-    echo -e "${CYAN} Snapshot base name prefix (default: lab_all):${RESET}"
+    echo -e "${CYAN}Snapshot base name prefix (default: lab_all):${RESET}"
     read -r BASE_NAME
     [[ -z "$BASE_NAME" ]] && BASE_NAME="lab_all"
 
@@ -1330,7 +1330,7 @@ lab_snapshot_all() {
 
     if ((${#SNAPSHOTS_CREATED[@]} > 0)); then
         echo ""
-        echo -e "${CYAN} Snapshots created:${RESET}"
+        echo -e "${CYAN}Snapshots created:${RESET}"
         printf '  - %s\n' "${SNAPSHOTS_CREATED[@]}"
         echo ""
     else
@@ -1387,12 +1387,12 @@ lab_rollback_all() {
     # Fallback: ask if wants all or manual list
     if [[ -z "$VM_LIST" ]]; then
         echo -e "${YELLOW} No VMs selected via menu.${RESET}"
-        echo -e "${CYAN} Use ALL VMs listed by libvirt? (y/N):${RESET}"
+        echo -e "${CYAN}Use ALL VMs listed by libvirt? (y/N):${RESET}"
         read -r use_all
         if [[ "$use_all" =~ ^[Yy]$ ]]; then
             VM_LIST="$ALL_VMS"
         else
-            echo -e "${CYAN} Enter VMs to rollback (space-separated, Enter to cancel):${RESET}"
+            echo -e "${CYAN}Enter VMs to rollback (space-separated, Enter to cancel):${RESET}"
             read -r VM_LIST
             VM_LIST=$(echo "$VM_LIST" | xargs)
         fi
@@ -1402,7 +1402,7 @@ lab_rollback_all() {
 
     # Optional snapshot name prefix filter
     local PREFIX
-    echo -e "${CYAN} Snapshot name prefix filter (optional, Enter for no filter):${RESET}"
+    echo -e "${CYAN}Snapshot name prefix filter (optional, Enter for no filter):${RESET}"
     read -r PREFIX
     PREFIX=$(echo "$PREFIX" | xargs)
 
@@ -1453,14 +1453,14 @@ lab_rollback_all() {
             done <<< "$SNAP_NAMES"
 
             if ensure_fzf; then
-                echo -e "${CYAN} Select snapshot to rollback for VM '${vm}':${RESET}"
+                echo -e "${CYAN}Select snapshot to rollback for VM '${vm}':${RESET}"
                 SEL=$(hnm_select "Snapshot for VM ${vm}" "$MENU_LINES") || {
                     echo -e "${WARN} No snapshot selected for VM '${vm}'. Skipping.${RESET}"
                     continue
                 }
                 SNAP_NAME=$(echo "$SEL" | awk '{print $1}')
             else
-                echo -e "${CYAN} Available snapshots for VM '${vm}':${RESET}"
+                echo -e "${CYAN}Available snapshots for VM '${vm}':${RESET}"
                 echo "$SNAP_LIST"
                 read -r -p "Snapshot name to rollback to (Enter to skip VM): " SNAP_NAME
                 SNAP_NAME=$(echo "$SNAP_NAME" | xargs)
@@ -1491,7 +1491,7 @@ lab_rollback_all() {
 
     if ((${#ROLLED_BACK[@]} > 0)); then
         echo ""
-        echo -e "${CYAN} Rollback completed for the following VM(s):${RESET}"
+        echo -e "${CYAN}Rollback completed for the following VM(s):${RESET}"
         printf '  - %s\n' "${ROLLED_BACK[@]}"
         echo ""
     else
@@ -1549,7 +1549,7 @@ EOF
         }
         ACTION_OPT=$(echo "$ACTION_SEL" | awk '{print $1}' | tr -d ')')
     else
-        echo -e "${CYAN} Select action:${RESET}"
+        echo -e "${CYAN}Select action:${RESET}"
         echo "1) Break DNS for selected VMs"
         echo "2) Break Web for selected VMs"
         echo "3) Remove all injected misconfig rules"
@@ -1599,7 +1599,7 @@ EOF
         }
         MODE_OPT=$(echo "$MODE_SEL" | awk '{print $1}' | tr -d ')')
     else
-        echo -e "${CYAN} Select mode:${RESET}"
+        echo -e "${CYAN}Select mode:${RESET}"
         echo "1) By libvirt network"
         echo "2) By VM"
         echo "0) Back"
@@ -1629,7 +1629,7 @@ EOF
                 NET_MENU+="${n}  [state:${state:-unknown}]  bridge:${bridge:-?}  gw:${gw:-?}  mode:${mode}"$'\n'
             done <<< "$NETS"
 
-            echo -e "${CYAN} Select a libvirt network to inspect:${RESET}"
+            echo -e "${CYAN}Select a libvirt network to inspect:${RESET}"
             if ensure_fzf; then
                 NET_SEL=$(hnm_select "Libvirt network" "$NET_MENU") || {
                     echo -e "${WARN} Operation canceled.${RESET}"
@@ -1651,14 +1651,14 @@ EOF
             [[ -z "$mode" ]] && mode="isolated"
 
             echo ""
-            echo -e "${CYAN} Network: ${NET_NAME}${RESET}"
+            echo -e "${CYAN}Network: ${NET_NAME}${RESET}"
             echo -e "  State : ${state:-unknown}"
             echo -e "  Bridge: ${bridge:-?}"
             echo -e "  GW    : ${gw:-?}"
             echo -e "  Mode  : ${mode}"
             echo ""
 
-            echo -e "${CYAN} VMs attached to network '${NET_NAME}':${RESET}"
+            echo -e "${CYAN}VMs attached to network '${NET_NAME}':${RESET}"
             local ANY_VM=false
             local vm
             for vm in $(virsh list --all --name 2>/dev/null | sed '/^$/d'); do
@@ -1685,13 +1685,13 @@ EOF
         2)
             # By VM
             local VM_NAME
-            echo -e "${CYAN} Select VM to inspect topology:${RESET}"
+            echo -e "${CYAN}Select VM to inspect topology:${RESET}"
             VM_NAME=$(hnm_select_vm) || { echo -e "${WARN} Operation canceled.${RESET}"; return 0; }
 
             local STATE
             STATE=$(virsh domstate "$VM_NAME" 2>/dev/null)
             echo ""
-            echo -e "${CYAN} VM: ${VM_NAME}${RESET}"
+            echo -e "${CYAN}VM: ${VM_NAME}${RESET}"
             echo -e "  State: ${STATE:-unknown}"
 
             # Basic info
@@ -1702,7 +1702,7 @@ EOF
             echo -e "  Memory: ${mem:-?}"
             echo ""
 
-            echo -e "${CYAN} Network interfaces:${RESET}"
+            echo -e "${CYAN}Network interfaces:${RESET}"
             virsh domiflist "$VM_NAME" 2>/dev/null | sed '1,2d' | sed '/^$/d' \
                 | while read -r ifname type source model mac; do
                     echo "  - if: ${ifname}"
@@ -1713,7 +1713,7 @@ EOF
                 done
 
             echo ""
-            echo -e "${CYAN} Guessed IP addresses (if vm_guess_ip supports it):${RESET}"
+            echo -e "${CYAN}Guessed IP addresses (if vm_guess_ip supports it):${RESET}"
             local IP_GUESS
             IP_GUESS=$(vm_guess_ip "$VM_NAME" 2>/dev/null)
             if [[ -n "$IP_GUESS" ]]; then
@@ -1791,7 +1791,7 @@ lab_create_ad_corp() {
     else
         # === MODO INTERATIVO COM VALIDAÇÃO DE IP ===
         echo
-        echo -e "${CYAN} AD LAB network settings (press ENTER to accept defaults):${RESET}"
+        echo -e "${CYAN}AD LAB network settings (press ENTER to accept defaults):${RESET}"
 
         # --- DC network ---
         read -r -p "DC network name   [${DC_NET_NAME_DEFAULT}]: " DC_NET_NAME
@@ -1874,7 +1874,7 @@ lab_create_ad_corp() {
     [[ "$dlim" =~ ^[Yy]$ ]] && vm_download_image_vm_mgr
 
     echo
-    echo -e "${CYAN} Available VMs (virsh list --all):${RESET}"
+    echo -e "${CYAN}Available VMs (virsh list --all):${RESET}"
     virsh -c qemu:///system list --all
 
     echo
@@ -1974,7 +1974,7 @@ lab_traffic_menu() {
                 echo -e "${FAIL} iperf3 not found. Install the 'iperf3' package to use this option.${RESET}"
                 return
             fi
-            echo -ne "${CYAN} iperf3 server port (default 5201): ${RESET}"
+            echo -ne "${CYAN}iperf3 server port (default 5201): ${RESET}"
             read -r P
             [[ -z "$P" ]] && P=5201
             echo -e "${INFO} Starting iperf3 -s -p ${P} (CTRL+C to stop)...${RESET}"
@@ -2071,7 +2071,7 @@ lab_connectivity_tests() {
 
     echo
     if command -v curl >/dev/null 2>&1; then
-        echo -ne "${CYAN} Do you want to test HTTP(S) with curl (e.g.: http://${TARGET}/)(y/N)? ${RESET}"
+        echo -ne "${CYAN}Do you want to test HTTP(S) with curl (e.g.: http://${TARGET}/)(y/N)? ${RESET}"
         read -r ans_http
         if [[ "$ans_http" =~ ^[Yy]$ ]]; then
             echo -ne "${CYAN}Full URL (e.g.: http://${TARGET}/):${RESET}"
