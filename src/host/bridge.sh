@@ -26,7 +26,7 @@ enable_bridge_mode() {
     save_state
     log_msg INFO "Activating BRIDGE mode: BRIDGE_IF=${BRIDGE_IF}, BRIDGE_IP=${BRIDGE_IP}"
 
-    echo -e "${CYAN} Activating BRIDGE mode via NetworkManager...${RESET}"
+    echo -e "${CYAN}Activating BRIDGE mode via NetworkManager...${RESET}"
 
     nmcli connection down "$BRIDGE_SLAVE_NAME" &>/dev/null || true
     nmcli connection down "$BRIDGE_NAME" &>/dev/null || true
@@ -76,7 +76,7 @@ enable_bridge_mode() {
 enable_eth_mode() {
     load_state
     echo ""
-    echo -e "${CYAN} Reverting to ETHERNET mode...${RESET}"
+    echo -e "${CYAN}Reverting to ETHERNET mode...${RESET}"
     echo ""
     log_msg INFO "Reverting to ETHERNET mode."
     
@@ -118,7 +118,7 @@ enable_eth_mode() {
 
 create_vlan_on_bridge() {
     initial_bridge_setup_if_needed
-    echo -ne "${CYAN} Enter VLAN ID to create on ${BRIDGE_IF} (e.g., 20): ${RESET}"
+    echo -ne "${CYAN}Enter VLAN ID to create on ${BRIDGE_IF} (e.g., 20): ${RESET}"
     read -r VID
     [[ -z "$VID" ]] && { echo -e "${WARN} No VLAN ID specified.${RESET}"; return; }
 
@@ -185,7 +185,7 @@ delete_vlan_bridge() {
 
     # Fallback: manual input if fzf not used or no VLANs detected
     if [[ -z "$VID" ]]; then
-        echo -ne "${CYAN} Enter VLAN ID to remove from ${BRIDGE_IF} (e.g., 20): ${RESET}"
+        echo -ne "${CYAN}Enter VLAN ID to remove from ${BRIDGE_IF} (e.g., 20): ${RESET}"
         read -r VID
         VID=$(echo "$VID" | xargs)
     fi

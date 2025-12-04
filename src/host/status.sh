@@ -47,7 +47,7 @@ status_networks_and_vms() {
     draw_menu_title "Active VM Interfaces"
     #echo -e "${BLUE}=== Active VM Interfaces ===${RESET}"
     virsh list --name | sed '/^$/d' | while read -r dom; do
-        echo -e "${CYAN} VM: ${dom}${RESET}"
+        echo -e "${CYAN}VM: ${dom}${RESET}"
         virsh domiflist "$dom"
         echo
     done
