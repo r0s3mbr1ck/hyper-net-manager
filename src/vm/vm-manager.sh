@@ -312,7 +312,7 @@ vm_delete_vm() {
     echo -e "${WARN} Removal OF FILES (qcow2/ISO) will be asked individually.${RESET}"
     echo
     read -r -p "Confirm deletion of VM ${VM_NAME} (y/N)?: " ans_del
-    [[ ! "$ans_del" =~ ^[Yy]$ ]] && { echo -e "${INFO}Operation canceled.${RESET}"; return; }
+    [[ ! "$ans_del" =~ ^[Yy]$ ]] && { echo -e "${INFO} Operation canceled.${RESET}"; return; }
 
     # Undefine first
     if virsh undefine "$VM_NAME" >/dev/null 2>&1; then
@@ -698,7 +698,7 @@ vm_tune_vm_resources() {
 
     # Select VM using arrow-key menu
     local VM_NAME
-    VM_NAME=$(hnm_select_vm) || { echo -e "${WARN}Operation canceled.${RESET}"; return; }
+    VM_NAME=$(hnm_select_vm) || { echo -e "${WARN} Operation canceled.${RESET}"; return; }
 
     local STATE
     STATE=$(virsh --connect qemu:///system domstate "$VM_NAME" 2>/dev/null) || {
@@ -1262,7 +1262,7 @@ vm_connect_existing() {
     # Try to discover IP
     echo -e "${INFO} Attempting to detect IP for VM ${VM_NAME}...${RESET}"
     local VM_IP
-    VM_IP="$(vm_guess_ip "$VM_NAME")"
+    VM_IP="$(hnm_get_vm_primary_ip "$VM_NAME")"
 
     if [[ -n "$VM_IP" ]]; then
         echo -e "${OK} IP detected: ${VM_IP}.${RESET}"
@@ -1680,7 +1680,7 @@ open_vm_console_auto() {
     if [[ -z "$VM_NAME" ]]; then
         echo ""
         echo -e "${CYAN}No VM name provided. Select a VM to open console:${RESET}"
-        VM_NAME=$(hnm_select_vm) || { echo -e "${WARN}Operation canceled.${RESET}"; return 1; }
+        VM_NAME=$(hnm_select_vm) || { echo -e "${WARN} Operation canceled.${RESET}"; return 1; }
     fi
 
     # First try to get the VM's graphical URI (SPICE or VNC)
