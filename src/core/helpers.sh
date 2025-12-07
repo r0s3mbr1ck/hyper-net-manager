@@ -13,7 +13,7 @@
 #############################
 # BANNER INFORMATION        #
 #############################
-APP_VERSION="1.0.3v"
+APP_VERSION="1.0.4v"
 APP_AUTHOR="Lead Developer: Alex Marano"
 APP_AI="AI-Assisted Build"
 APP_EMAIL="Support: alex_marano87@hotmail.com"
@@ -279,6 +279,10 @@ hnm_select() {
 # Purpose : Show all libvirt VMs with detected IP addresses (multi-NIC aware).
 # Module  : Global Helpers (VM utility)
 #------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# vm_list_vms_with_ip_multi()
+# Purpose : Show all libvirt VMs with detected IP addresses (multi-NIC aware).
+#------------------------------------------------------------------------------
 vm_list_vms_with_ip_multi() {
     echo
     draw_menu_title "VMs (virsh) with IP detection (multi-NIC)"
@@ -287,7 +291,7 @@ vm_list_vms_with_ip_multi() {
     printf "%-18s %-12s %s\n" "VM" "State" "IP(s) detected"
     echo "---------------------------------------------------------------"
 
-    local VMS VM STATE GA_OUT ARP_OUT MAIN_IP ALL_IPS
+    local VMS VM STATE GA_OUT MAIN_IP ALL_IPS
 
     VMS=$(virsh --connect qemu:///system list --all 2>/dev/null \
         | awk 'NR>2 && $2!="" {print $2}' \
@@ -304,36 +308,19 @@ vm_list_vms_with_ip_multi() {
         ALL_IPS=""
 
         if [[ "$STATE" == "running" ]]; then
-            # Coleta IPs do guest agent, tudo em UMA LINHA
+            # IPs via guest agent (IPv4/IPv6, tudo em uma linha)
             GA_OUT=$(virsh --connect qemu:///system domifaddr "$VM" --source agent --full 2>/dev/null \
                         | awk 'NR>2 && $4!="-"{print $4}' \
-                        | xargs)   # <- junta em "ip1 ip2 ip3"
+                        | xargs)
 
             if [[ -n "$GA_OUT" ]]; then
-                # Todos os IPs em CSV: "ip1, ip2, ip3"
                 ALL_IPS=${GA_OUT// /, }
-
-                # Escolhe MAIN_IP (prefere IPv4)
-                local addr
-                for addr in $GA_OUT; do
-                    [[ -z "$addr" ]] && continue
-                    if [[ "$addr" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}(/([0-9]{1,2}))?$ ]]; then
-                        MAIN_IP="$addr"
-                        break
-                    fi
-                    [[ "$MAIN_IP" == "N/A" ]] && MAIN_IP="$addr"
-                done
             fi
 
-            # Fallback via ARP se não achou nada
-            if [[ "$MAIN_IP" == "N/A" ]]; then
-                ARP_OUT=$(ip neigh 2>/dev/null | awk 'NF>=5 {print $1}' | head -n1)
-                [[ -n "$ARP_OUT" ]] && MAIN_IP="$ARP_OUT"
-                [[ -z "$ALL_IPS" && -n "$ARP_OUT" ]] && ALL_IPS="$ARP_OUT"
-            fi
+            # IP principal padronizado (IPv4 preferido)
+            MAIN_IP=$(hnm_get_vm_primary_ip "$VM")
         fi
 
-        # Se ainda estiver vazio, usa MAIN_IP ou “N/A”
         [[ -z "$ALL_IPS" ]] && ALL_IPS="$MAIN_IP"
         [[ -z "$ALL_IPS" ]] && ALL_IPS="N/A"
 
@@ -343,10 +330,58 @@ vm_list_vms_with_ip_multi() {
     echo
 }
 
+
+#------------------------------------------------------------------------------
+# hnm_get_vm_primary_ip()
+# Purpose : Get the primary IPv4 address of a running VM (ignoring loopback).
+# Returns : IPv4 (sem /prefix) ou nada se não achar
+#------------------------------------------------------------------------------
+hnm_get_vm_primary_ip() {
+    local VM_NAME="$1"
+    local IP=""
+
+    # 1) Tenta via guest agent, ignorando loopback (lo / 127.x)
+    IP=$(
+        virsh --connect qemu:///system domifaddr "$VM_NAME" --source agent --full 2>/dev/null \
+        | awk 'NR>2 && $1!="lo" && $3=="ipv4" {print $4}' \
+        | head -n1 \
+        | cut -d'/' -f1
+    )
+
+    # 2) Sem agent (ou sem IP válido), tenta domifaddr "normal"
+    if [[ -z "$IP" ]]; then
+        IP=$(
+            virsh --connect qemu:///system domifaddr "$VM_NAME" 2>/dev/null \
+            | awk 'NR>2 && $3=="ipv4" {print $4}' \
+            | head -n1 \
+            | cut -d'/' -f1
+        )
+    fi
+
+    # 3) Último recurso: leases DHCP da rede default
+    if [[ -z "$IP" ]]; then
+        IP=$(
+            virsh --connect qemu:///system net-dhcp-leases default 2>/dev/null \
+            | awk -v vm="$VM_NAME" '$0 ~ vm && /ipv4/ {print $5}' \
+            | head -n1 \
+            | cut -d'/' -f1
+        )
+    fi
+
+    [[ -n "$IP" ]] && echo "$IP"
+}
+
+
+
 #------------------------------------------------------------------------------
 # hnm_select_vm()
 # Purpose : Present VMs (with state/IPs) and let user choose one.
 # Module  : Global Helpers (VM utility)
+# Returns : Selected VM name on stdout.
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# hnm_select_vm()
+# Purpose : Present VMs (with state/IPs) and let user choose one.
 # Returns : Selected VM name on stdout.
 #------------------------------------------------------------------------------
 hnm_select_vm() {
@@ -361,7 +396,7 @@ hnm_select_vm() {
     fi
 
     local MENU=""
-    local VM STATE GA_OUT ARP_OUT MAIN_IP ALL_IPS
+    local VM STATE GA_OUT MAIN_IP ALL_IPS
 
     for VM in $VMS; do
         STATE=$(virsh --connect qemu:///system domstate "$VM" 2>/dev/null)
@@ -369,33 +404,17 @@ hnm_select_vm() {
         ALL_IPS=""
 
         if [[ "$STATE" == "running" ]]; then
-            # IPs via guest agent (IPv4/IPv6, uma por linha)
+            # IPs via guest agent (para exibir na lista)
             GA_OUT=$(virsh --connect qemu:///system domifaddr "$VM" --source agent --full 2>/dev/null \
                         | awk 'NR>2 && $4!="-"{print $4}' \
                         | xargs)
 
             if [[ -n "$GA_OUT" ]]; then
-                # Todos os IPs em CSV
                 ALL_IPS=${GA_OUT// /, }
-
-                # Escolhe MAIN_IP (prefere IPv4)
-                local addr
-                for addr in $GA_OUT; do
-                    [[ -z "$addr" ]] && continue
-                    if [[ "$addr" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}(/([0-9]{1,2}))?$ ]]; then
-                        MAIN_IP="$addr"
-                        break
-                    fi
-                    [[ "$MAIN_IP" == "N/A" ]] && MAIN_IP="$addr"
-                done
             fi
 
-            # Fallback ARP
-            if [[ "$MAIN_IP" == "N/A" ]]; then
-                ARP_OUT=$(ip neigh 2>/dev/null | awk 'NF>=5 {print $1}' | head -n1)
-                [[ -n "$ARP_OUT" ]] && MAIN_IP="$ARP_OUT"
-                [[ -z "$ALL_IPS" && -n "$ARP_OUT" ]] && ALL_IPS="$ARP_OUT"
-            fi
+            # IP principal padronizado
+            MAIN_IP=$(hnm_get_vm_primary_ip "$VM")
         fi
 
         [[ -z "$ALL_IPS" ]] && ALL_IPS="$MAIN_IP"
@@ -403,11 +422,6 @@ hnm_select_vm() {
 
         local LINE
         printf -v LINE "%-18s %-12s %s" "$VM" "[$STATE]" "$ALL_IPS"
-
-        # 🔴 AQUI era o problema: "\n" vira texto, não quebra de linha.
-        # MENU+="${LINE}\n"
-
-        # ✅ Correto: quebra de linha real com $'\n'
         MENU+="${LINE}"$'\n'
     done
 
@@ -415,6 +429,7 @@ hnm_select_vm() {
     SEL=$(hnm_select "Select VM" "$MENU") || return 1
     echo "$SEL" | awk '{print $1}'
 }
+
 
 hnm_ensure_nmcli() {
     if ! command -v nmcli >/dev/null 2>&1; then
