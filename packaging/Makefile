@@ -5,7 +5,7 @@
 ############################################
 
 PKG_NAME      := hyper-net-manager
-APP_VERSION   := 1.0.3
+APP_VERSION   := 1.0.4
 DEB_VERSION   := $(APP_VERSION)
 BUILD_DIR     := $(PKG_NAME)_$(DEB_VERSION)
 
